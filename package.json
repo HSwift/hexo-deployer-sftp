@@ -1,14 +1,14 @@
 {
   "name": "hexo-deployer-sftp",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "SFTP deployer for Hexo",
   "main": "index",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lucascaro/hexo-deployer-sftp.git"
+    "url": "https://github.com/HSwift/hexo-deployer-sftp.git"
   },
   "bugs": {
-    "url": "https://github.com/lucascaro/hexo-deployer-sftp/issues"
+    "url": "https://github.com/HSwift/hexo-deployer-sftp/issues"
   },
   "keywords": [
     "hexo",
@@ -17,12 +17,11 @@
     "deploy",
     "deployer"
   ],
-  "author": "Lucas Caro <lucascaro@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "sftp-sync-deploy": "^0.8.0"
+    "ssh2-sftp-client": "^7.1.0"
   },
   "devDependencies": {
-    "@types/hexo": "^3.8.3"
+    "@types/hexo": "^3.8.7"
   }
 }

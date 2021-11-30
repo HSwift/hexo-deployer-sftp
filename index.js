@@ -1,7 +1,8 @@
-const sftp = require("sftp-sync-deploy");
+const sftp = require("ssh2-sftp-client");
+const fs = require("fs")
 
 /** @type {import("@types/hexo")} */
-hexo.extend.deployer.register("sftp", function(args) {
+hexo.extend.deployer.register("sftp", async function(args) {
   if (!args.host || !args.user) {
     const help = [
       "You should argsure deployment settings in _config.yml first!",
@@ -16,9 +17,7 @@ hexo.extend.deployer.register("sftp", function(args) {
       "    privateKey: [path/to/privateKey] # Optional",
       "    passphrase: [passphrase] # Optional",
       "    agent: [path/to/agent/socket] # Optional, defaults to $SSH_AUTH_SOCK",
-      "    remotePath: [remotePath] # Default is `/`",
-      "    forceUpload: [boolean] # default is false",
-      "    concurrency: [number] # Max number of SFTP tasks processed concurrently. Default to 100.",
+      "    remotePath: [remotePath] # Default is `/var/www/html`",
       "",
       "For more help, you can check the docs: " +
         "https://hexo.io/docs/one-command-deployment",
@@ -33,25 +32,12 @@ hexo.extend.deployer.register("sftp", function(args) {
     port: args.port || 22,
     username: args.user,
     password: args.pass,
-    privateKey: args.privateKey,
+    privateKey: args.privateKey && fs.readFileSync(args.privateKey),
     passphrase: args.passphrase,
     agent: args.agent || process.env.SSH_AUTH_SOCK,
-    localDir: hexo.public_dir,
-    remoteDir: args.remotePath || "/",
   };
 
-  /** @type { import('sftp-sync-deploy').SftpSyncOptions } */
-  const options = {
-    dryRun: !!args.dryrun,
-    forceUpload: args.forceUpload,
-    excludeMode: "remove",
-    concurrency: args.concurrency || 100,
-    // exclude patterns (glob)
-    // exclude: [
-    //   'node_modules',
-    //   'src/**/*.spec.ts'
-    // ]
-  };
-  console.log("Deploying with configuration: ", options);
-  return sftp.deploy(config, options);
+  let client = new sftp();
+  await client.connect(config);
+  await client.uploadDir(hexo.public_dir, args.remotePath || "/var/www/html");
 });

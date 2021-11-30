@@ -1,19 +1,20 @@
 # SFTP deployer
 
-[![npm](https://img.shields.io/npm/v/hexo-deployer-sftp)](https://www.npmjs.com/package/hexo-deployer-sftp)
-[![GitHub license](https://img.shields.io/github/license/lucascaro/hexo-deployer-sftp)](https://github.com/lucascaro/hexo-deployer-sftp/blob/master/LICENSE)
-
 Deploy your site via SFTP.
 
 ## Install
 
 ```
-$ npm install hexo-deployer-sftp --save
+$ npm install https://github.com/HSwift/hexo-deployer-sftp.git --save
 ```
 
 ## Usage
 
 See https://hexo.io/docs/one-command-deployment#SFTP
+
+## Update
+
+replace sftp-sync-deploy with ssh2-sftp-client
 
 ## Warning
 
